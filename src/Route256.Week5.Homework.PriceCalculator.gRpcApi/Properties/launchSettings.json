@@ -1,0 +1,13 @@
+﻿{
+  "profiles": {
+    "Route256.Week5.Homework.PriceCalculator.gRpcApi": {
+      "commandName": "Project",
+      "dotnetRunMessages": true,
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5141;https://localhost:7281",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
