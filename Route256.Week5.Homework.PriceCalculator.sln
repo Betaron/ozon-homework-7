@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Route256.Week5.Homework.Pri
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Route256.Week5.Homework.TestingInfrastructure", "test\Route256.Week5.Homework.TestingInfrastructure\Route256.Week5.Homework.TestingInfrastructure.csproj", "{E69F81B6-4B1A-4341-82CD-96091945D7A0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Route256.Week5.Homework.PriceCalculator.gRpcApi", "src\Route256.Week5.Homework.PriceCalculator.gRpcApi\Route256.Week5.Homework.PriceCalculator.gRpcApi.csproj", "{E7BFBD93-7BC8-4164-803A-D65E345D64A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Route256.Week5.Homework.PriceCalculator.gRpcApi", "src\Route256.Week5.Homework.PriceCalculator.gRpcApi\Route256.Week5.Homework.PriceCalculator.gRpcApi.csproj", "{E7BFBD93-7BC8-4164-803A-D65E345D64A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

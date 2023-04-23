@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos.V1";
+
+service History {
+    rpc Clear(ClearRequest) returns (Empty);
+}
+
+message ClearRequest {
+    int64 user_id = 1;
+    repeated int64 calculation_ids = 2;
+}
+
+message Empty {
+}
