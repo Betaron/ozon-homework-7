@@ -2,6 +2,7 @@ using Grpc.Core;
 using MediatR;
 using Route256.Week5.Homework.PriceCalculator.Bll.Commands;
 using Route256.Week5.Homework.PriceCalculator.Bll.Models;
+using Route256.Week5.Homework.PriceCalculator.gRpcApi.Extensions;
 using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos.V1;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Services;
@@ -32,7 +33,7 @@ public class DeliveryService : Delivery.DeliveryBase
         return new Response
         {
             CalculationId = result.CalculationId,
-            Price = DecimalValue.FromDecimal(result.Price)
+            Price = result.Price.ToDecimalValue()
         };
     }
 }
