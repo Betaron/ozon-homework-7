@@ -4,7 +4,7 @@ using Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
 
 internal class Program
 {
-    private static void Main()
+    private static async Task Main()
     {
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
@@ -21,10 +21,13 @@ internal class Program
             switch (command?.ToLower())
             {
                 case "calculate":
-                    deliveryCalculator.Calculate();
+                    await deliveryCalculator.Calculate();
                     break;
                 case "v1.clear":
-                    historyV1.Clear();
+                    await historyV1.Clear();
+                    break;
+                case "v1.get":
+                    await historyV1.Get();
                     break;
                 case null:
                     return;
@@ -40,6 +43,7 @@ internal class Program
         sb.AppendLine("Available commands:");
         sb.AppendLine("\t- calcuate");
         sb.AppendLine("\t- v1.clear");
+        sb.AppendLine("\t- v1.get");
 
         Console.WriteLine(sb);
     }
