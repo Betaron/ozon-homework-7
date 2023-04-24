@@ -2,6 +2,8 @@ syntax = "proto3";
 
 option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos.V1";
 
+import "Protos/Common/decimal.proto";
+
 service Delivery{
     rpc Calculate(Request) returns (Response);
 }
@@ -21,9 +23,4 @@ message GoodProperies {
     double length = 2;
     double width = 3;
     double weight = 4;
-}
-
-message DecimalValue {
-  int64 units = 1;
-  sfixed32 nanos = 2;
 }
