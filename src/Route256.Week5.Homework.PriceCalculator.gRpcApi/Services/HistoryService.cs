@@ -3,15 +3,15 @@ using MediatR;
 using Route256.Week5.Homework.PriceCalculator.Bll.Commands;
 using Route256.Week5.Homework.PriceCalculator.Bll.Queries;
 using Route256.Week5.Homework.PriceCalculator.gRpcApi.Extensions;
-using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos.V1;
+using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Services;
 
-public class HistoryServiceV1 : History.HistoryBase
+public class HistoryService : History.HistoryBase
 {
     private readonly IMediator _mediator;
 
-    public HistoryServiceV1(
+    public HistoryService(
         IMediator mediator)
     {
         _mediator = mediator;
@@ -33,8 +33,8 @@ public class HistoryServiceV1 : History.HistoryBase
     {
         var query = new GetCalculationHistoryQuery(
             request.UserId,
-            request.Take,
-            request.Skip);
+            int.MaxValue,
+            0);
         var result = await _mediator.Send(query, context.CancellationToken);
 
         foreach (var item in result.Items)

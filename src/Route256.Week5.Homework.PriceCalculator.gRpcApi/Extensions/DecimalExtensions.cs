@@ -1,4 +1,4 @@
-using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos.Common;
+using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Extensions;
 

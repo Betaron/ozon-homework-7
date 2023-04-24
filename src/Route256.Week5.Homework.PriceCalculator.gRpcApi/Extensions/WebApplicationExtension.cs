@@ -6,9 +6,8 @@ public static class WebApplicationExtension
 {
     public static WebApplication? MapGrpcServices(this WebApplication app)
     {
-        app.MapGrpcService<DeliveryServiceV1>();
-        app.MapGrpcService<HistoryServiceV1>();
-        app.MapGrpcService<HistoryServiceV2>();
+        app.MapGrpcService<DeliveryService>();
+        app.MapGrpcService<HistoryService>();
 
         return app;
     }
