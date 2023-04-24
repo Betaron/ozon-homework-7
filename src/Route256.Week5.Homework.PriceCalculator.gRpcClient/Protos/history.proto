@@ -1,20 +1,21 @@
 syntax = "proto3";
 
-option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos.V2";
+option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos";
 
-import "Protos/Common/decimal.proto";
-
-package v2;
+import "Protos/decimal.proto";
 
 service History {
+    rpc Clear(ClearRequest) returns (Empty);
     rpc Get(GetRequest) returns (stream GetResponse);
+}
+
+message ClearRequest {
+    int64 user_id = 1;
+    repeated int64 calculation_ids = 2;
 }
 
 message GetRequest {
     int64 user_id = 1;
-    repeated int64 calculation_ids = 4;
-    int32 take = 2;
-    int32 skip = 3;
 }
 
 message GetResponse {

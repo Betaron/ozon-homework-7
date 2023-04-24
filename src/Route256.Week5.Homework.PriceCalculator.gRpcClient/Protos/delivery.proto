@@ -1,19 +1,19 @@
 syntax = "proto3";
 
-option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos.V1";
+option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos";
 
-import "Protos/Common/decimal.proto";
+import "Protos/decimal.proto";
 
 service Delivery{
-    rpc Calculate(Request) returns (Response);
+    rpc Calculate(CalculateRequest) returns (CalculateResponse);
 }
 
-message Request {
+message CalculateRequest {
     int64 user_id = 1;
     repeated GoodProperies goods = 2;
 }
 
-message Response {
+message CalculateResponse {
     int64 calculation_id = 1;
     DecimalValue price = 2;
 }

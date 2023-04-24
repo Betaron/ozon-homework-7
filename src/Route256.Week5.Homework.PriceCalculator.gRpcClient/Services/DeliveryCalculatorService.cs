@@ -1,34 +1,19 @@
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Route256.Week5.Homework.PriceCalculator.gRpcClient.Interceptors;
-using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos.V1;
+using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
 
-internal class DeliveryCalculatorCommands
+internal class DeliveryCalculatorService
 {
-    private readonly IHost _host;
-    public DeliveryCalculatorCommands()
+    private readonly Delivery.DeliveryClient _deliveryClient;
+
+    public DeliveryCalculatorService(Delivery.DeliveryClient deliveryClient)
     {
-        _host = new HostBuilder()
-            .ConfigureServices(services =>
-            {
-                services
-                    .AddLogging(o => o.AddConsole())
-                    .AddSingleton<LoggingInterceptor>()
-                    .AddGrpcClient<Delivery.DeliveryClient>(o =>
-                    {
-                        o.Address = new Uri("http://localhost:5141");
-                    })
-                    .AddInterceptor<LoggingInterceptor>();
-            })
-            .Build();
+        _deliveryClient = deliveryClient;
     }
 
     public Task Calculate()
     {
-        var request = new Request();
+        var request = new CalculateRequest();
 
         try
         {
@@ -56,12 +41,7 @@ internal class DeliveryCalculatorCommands
             return Task.FromException(ex);
         }
 
-        _host.StartAsync();
-
-        var client = _host.Services.GetRequiredService<Delivery.DeliveryClient>();
-        var result = client.Calculate(request);
-
-        _host.StopAsync();
+        var result = _deliveryClient.Calculate(request);
 
         Console.WriteLine(
             $"Calculation id: {result.CalculationId}\n" +

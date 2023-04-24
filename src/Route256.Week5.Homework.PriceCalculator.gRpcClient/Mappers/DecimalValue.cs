@@ -1,4 +1,4 @@
-namespace Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos.Common;
+namespace Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos;
 
 public partial class DecimalValue
 {
