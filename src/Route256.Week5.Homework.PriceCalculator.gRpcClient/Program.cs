@@ -12,6 +12,7 @@ internal class Program
 
         var deliveryCalculator = new DeliveryCalculatorCommands();
         var historyV1 = new V1HistoryCommands();
+        var historyV2 = new V2HistoryCommands();
 
         while (true)
         {
@@ -29,6 +30,9 @@ internal class Program
                 case "v1.get":
                     await historyV1.Get();
                     break;
+                case "v2.get":
+                    await historyV2.Get();
+                    break;
                 case null:
                     return;
                 default:
@@ -44,6 +48,7 @@ internal class Program
         sb.AppendLine("\t- calcuate");
         sb.AppendLine("\t- v1.clear");
         sb.AppendLine("\t- v1.get");
+        sb.AppendLine("\t- v2.get");
 
         Console.WriteLine(sb);
     }
