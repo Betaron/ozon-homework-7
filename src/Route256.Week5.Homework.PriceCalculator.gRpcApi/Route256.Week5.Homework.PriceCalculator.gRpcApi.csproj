@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Protobuf Include="**\*.proto" GrpcServices="Server"/>
+	<Protobuf Include="**\*.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\V2\history.proto" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,11 +7,11 @@ using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos.V1;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Services;
 
-public class DeliveryService : Delivery.DeliveryBase
+public class DeliveryServiceV1 : Delivery.DeliveryBase
 {
     private readonly IMediator _mediator;
 
-    public DeliveryService(
+    public DeliveryServiceV1(
         IMediator mediator)
     {
         _mediator = mediator;
