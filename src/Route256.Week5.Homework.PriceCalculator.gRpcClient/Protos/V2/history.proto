@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos.V2";
+
+import "Protos/Common/decimal.proto";
+
+package v2;
+
+service History {
+    rpc Get(GetRequest) returns (stream GetResponse);
+}
+
+message GetRequest {
+    int64 user_id = 1;
+    repeated int64 calculation_ids = 4;
+    int32 take = 2;
+    int32 skip = 3;
+}
+
+message GetResponse {
+    CargoResponse cargo = 1;
+    DecimalValue price = 2;
+}
+
+message CargoResponse {
+    double volume = 1;
+    double weight = 2;
+    repeated int64 good_ids = 3;
+}
+
+message Empty {
+}
