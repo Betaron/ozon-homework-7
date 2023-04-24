@@ -6,10 +6,10 @@ using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos.V1;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
 
-internal class DeliveryCalculator
+internal class DeliveryCalculatorCommands
 {
     private readonly IHost _host;
-    public DeliveryCalculator()
+    public DeliveryCalculatorCommands()
     {
         _host = new HostBuilder()
             .ConfigureServices(services =>

@@ -1,4 +1,5 @@
 using System.Globalization;
+using System.Text;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
 
 internal class Program
@@ -7,7 +8,10 @@ internal class Program
     {
         CultureInfo.DefaultThreadCurrentCulture = CultureInfo.GetCultureInfo("en-US");
 
-        var deliveryCalculator = new DeliveryCalculator();
+        PrintHelp();
+
+        var deliveryCalculator = new DeliveryCalculatorCommands();
+        var historyV1 = new V1HistoryCommands();
 
         while (true)
         {
@@ -19,9 +23,24 @@ internal class Program
                 case "calculate":
                     deliveryCalculator.Calculate();
                     break;
+                case "v1.clear":
+                    historyV1.Clear();
+                    break;
+                case null:
+                    return;
                 default:
                     break;
             }
         }
+    }
+
+    static void PrintHelp()
+    {
+        var sb = new StringBuilder();
+        sb.AppendLine("Available commands:");
+        sb.AppendLine("\t- calcuate");
+        sb.AppendLine("\t- v1.clear");
+
+        Console.WriteLine(sb);
     }
 }
