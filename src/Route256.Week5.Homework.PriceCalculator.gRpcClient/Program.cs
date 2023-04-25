@@ -7,7 +7,6 @@ using Microsoft.Extensions.Logging;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
 using Route256.Week5.Homework.PriceCalculator.ProtoLib.Protos;
 
-
 var clientOptions = new Action<GrpcClientFactoryOptions>(o =>
         {
             o.Address = new Uri("http://localhost:5141");
@@ -47,6 +46,9 @@ while (true)
         case "calculate":
             await deliveryCalculator.Calculate();
             break;
+        case "streamcalculate":
+            await deliveryCalculator.StreamCalculate();
+            break;
         case "clear":
             await history.Clear();
             break;
@@ -65,6 +67,7 @@ static void PrintHelp()
     var sb = new StringBuilder();
     sb.AppendLine("Available commands:");
     sb.AppendLine("\t- calcuate");
+    sb.AppendLine("\t- streamCalcuate");
     sb.AppendLine("\t- clear");
     sb.AppendLine("\t- get");
     sb.AppendLine("\nCtrl + C to exit.");

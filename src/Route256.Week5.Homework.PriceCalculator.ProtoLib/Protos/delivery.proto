@@ -6,6 +6,7 @@ import "Protos/decimal.proto";
 
 service Delivery{
     rpc Calculate(CalculateRequest) returns (CalculateResponse);
+    rpc StreamCalculate(stream StreamCalculateRequest) returns (stream StreamCalculateResponse);
 }
 
 message CalculateRequest {
@@ -16,6 +17,14 @@ message CalculateRequest {
 message CalculateResponse {
     int64 calculation_id = 1;
     DecimalValue price = 2;
+}
+
+message StreamCalculateRequest {
+    GoodProperies good = 2;
+}
+
+message StreamCalculateResponse {
+    DecimalValue price = 1;
 }
 
 message GoodProperies {
