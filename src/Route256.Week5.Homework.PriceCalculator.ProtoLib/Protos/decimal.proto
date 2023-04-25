@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos";
+option csharp_namespace = "Route256.Week5.Homework.PriceCalculator.ProtoLib.Protos";
 
 message DecimalValue {
   int64 units = 1;

@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
-
+using Route256.Week5.Homework.PriceCalculator.ProtoLib.Protos;
 
 var clientOptions = new Action<GrpcClientFactoryOptions>(o =>
         {

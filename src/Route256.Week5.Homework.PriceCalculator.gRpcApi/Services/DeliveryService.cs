@@ -3,8 +3,8 @@ using Grpc.Core;
 using MediatR;
 using Route256.Week5.Homework.PriceCalculator.Bll.Commands;
 using Route256.Week5.Homework.PriceCalculator.Bll.Models;
-using Route256.Week5.Homework.PriceCalculator.gRpcApi.Extensions;
-using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos;
+using Route256.Week5.Homework.PriceCalculator.ProtoLib.Extensions;
+using Route256.Week5.Homework.PriceCalculator.ProtoLib.Protos;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Services;
 

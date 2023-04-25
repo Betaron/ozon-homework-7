@@ -1,6 +1,6 @@
-using Route256.Week5.Homework.PriceCalculator.gRpcApi.Protos;
+using Route256.Week5.Homework.PriceCalculator.ProtoLib.Protos;
 
-namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Extensions;
+namespace Route256.Week5.Homework.PriceCalculator.ProtoLib.Extensions;
 
 public static class DecimalExtensions
 {

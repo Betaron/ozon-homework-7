@@ -1,5 +1,5 @@
 using Grpc.Core;
-using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos;
+using Route256.Week5.Homework.PriceCalculator.ProtoLib.Protos;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
 
