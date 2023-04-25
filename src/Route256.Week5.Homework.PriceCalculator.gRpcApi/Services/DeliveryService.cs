@@ -12,13 +12,16 @@ public class DeliveryService : Delivery.DeliveryBase
 {
     private readonly IMediator _mediator;
     private readonly IValidator<CalculateRequest> _calculateValidator;
+    private readonly IValidator<StreamCalculateRequest> _streamCalculateValidator;
 
     public DeliveryService(
         IMediator mediator,
-        IValidator<CalculateRequest> calculateValidator)
+        IValidator<CalculateRequest> calculateValidator,
+        IValidator<StreamCalculateRequest> streamCalculateValidator)
     {
         _mediator = mediator;
         _calculateValidator = calculateValidator;
+        _streamCalculateValidator = streamCalculateValidator;
     }
 
     public override async Task<CalculateResponse> Calculate(
@@ -47,5 +50,40 @@ public class DeliveryService : Delivery.DeliveryBase
             CalculationId = result.CalculationId,
             Price = result.Price.ToDecimalValue()
         };
+    }
+
+    public override async Task StreamCalculate(
+        IAsyncStreamReader<StreamCalculateRequest> requestStream,
+        IServerStreamWriter<CalculateResponse> responseStream,
+        ServerCallContext context)
+    {
+        await foreach (var request in requestStream.ReadAllAsync())
+        {
+            var validationResult = await _streamCalculateValidator.ValidateAsync(request);
+
+            if (!validationResult.IsValid)
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
+            var command = new CalculateDeliveryPriceCommand(
+            request.UserId,
+            new GoodModel[]
+            {
+                new(
+                    request.Good.Height,
+                    request.Good.Length,
+                    request.Good.Width,
+                    request.Good.Weight)
+            });
+
+            var result = await _mediator.Send(command, context.CancellationToken);
+
+            await responseStream.WriteAsync(new CalculateResponse
+            {
+                CalculationId = result.CalculationId,
+                Price = result.Price.ToDecimalValue()
+            });
+        }
     }
 }
