@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
-using Route256.Week5.Homework.PriceCalculator.gRpcClient.Interceptors;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos;
 
 
@@ -18,16 +17,10 @@ var hostBuilder = new HostBuilder();
 
 hostBuilder.ConfigureServices(services =>
 {
-    services
-        .AddLogging(o => o.AddConsole())
-        .AddSingleton<LoggingInterceptor>();
+    services.AddLogging(o => o.AddConsole());
 
-    services.AddGrpcClient<Delivery.DeliveryClient>(clientOptions)
-        .AddInterceptor<LoggingInterceptor>();
-
-    services
-        .AddGrpcClient<History.HistoryClient>(clientOptions)
-        .AddInterceptor<LoggingInterceptor>();
+    services.AddGrpcClient<Delivery.DeliveryClient>(clientOptions);
+    services.AddGrpcClient<History.HistoryClient>(clientOptions);
 
     services.AddSingleton<DeliveryCalculatorService>();
     services.AddSingleton<HistoryService>();

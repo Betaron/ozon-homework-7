@@ -1,3 +1,4 @@
+using FluentValidation;
 using Grpc.Core;
 using MediatR;
 using Route256.Week5.Homework.PriceCalculator.Bll.Commands;
@@ -10,16 +11,26 @@ namespace Route256.Week5.Homework.PriceCalculator.gRpcApi.Services;
 public class DeliveryService : Delivery.DeliveryBase
 {
     private readonly IMediator _mediator;
+    private readonly IValidator<CalculateRequest> _calculateValidator;
 
     public DeliveryService(
-        IMediator mediator)
+        IMediator mediator,
+        IValidator<CalculateRequest> calculateValidator)
     {
         _mediator = mediator;
+        _calculateValidator = calculateValidator;
     }
 
     public override async Task<CalculateResponse> Calculate(
         CalculateRequest request, ServerCallContext context)
     {
+        var validationResult = await _calculateValidator.ValidateAsync(request);
+
+        if (!validationResult.IsValid)
+        {
+            throw new ValidationException(validationResult.Errors);
+        }
+
         var command = new CalculateDeliveryPriceCommand(
             request.UserId,
             request.Goods
