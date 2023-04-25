@@ -1,3 +1,4 @@
+using Grpc.Core;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos;
 
 namespace Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
@@ -48,5 +49,57 @@ internal class DeliveryCalculatorService
             $"Price: {result.Price.ToDecimal()}");
 
         return Task.CompletedTask;
+    }
+
+    public async Task StreamCalculate()
+    {
+        var call = _deliveryClient.StreamCalculate();
+
+        var responseTask = Task.Run(async () =>
+        {
+            await foreach (var response in call.ResponseStream.ReadAllAsync())
+            {
+                Console.WriteLine($"Price: {response.Price.ToDecimal()}");
+            }
+        });
+
+        Console.WriteLine("Enter file name: ");
+        var path = Console.ReadLine();
+        if (!File.Exists(path ?? string.Empty))
+        {
+            Console.WriteLine("The file does not exist");
+            return;
+        }
+
+        using (var file = File.OpenText(path))
+        {
+            while (!file.EndOfStream)
+            {
+                var request = new StreamCalculateRequest();
+
+                try
+                {
+                    var propertiesString = file.ReadLine();
+                    var properties = propertiesString?.Split(',').Select(x => x.Trim()).ToArray();
+                    request.Good = new GoodProperies()
+                    {
+                        Height = double.Parse(properties[0]),
+                        Length = double.Parse(properties[1]),
+                        Width = double.Parse(properties[2]),
+                        Weight = double.Parse(properties[3])
+                    };
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex.Message);
+                    break;
+                }
+
+                await call.RequestStream.WriteAsync(request);
+            }
+
+            await call.RequestStream.CompleteAsync();
+            await responseTask;
+        }
     }
 }
