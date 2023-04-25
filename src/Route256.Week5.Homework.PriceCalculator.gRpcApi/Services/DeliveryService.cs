@@ -54,7 +54,7 @@ public class DeliveryService : Delivery.DeliveryBase
 
     public override async Task StreamCalculate(
         IAsyncStreamReader<StreamCalculateRequest> requestStream,
-        IServerStreamWriter<CalculateResponse> responseStream,
+        IServerStreamWriter<StreamCalculateResponse> responseStream,
         ServerCallContext context)
     {
         await foreach (var request in requestStream.ReadAllAsync())
@@ -66,23 +66,17 @@ public class DeliveryService : Delivery.DeliveryBase
                 throw new ValidationException(validationResult.Errors);
             }
 
-            var command = new CalculateDeliveryPriceCommand(
-            request.UserId,
-            new GoodModel[]
-            {
-                new(
-                    request.Good.Height,
-                    request.Good.Length,
-                    request.Good.Width,
-                    request.Good.Weight)
-            });
+            var command = new CalculateDeliveryPriceWithoutSavingCommand(
+            new(request.Good.Height,
+                request.Good.Length,
+                request.Good.Width,
+                request.Good.Weight));
 
             var result = await _mediator.Send(command, context.CancellationToken);
 
-            await responseStream.WriteAsync(new CalculateResponse
+            await responseStream.WriteAsync(new StreamCalculateResponse()
             {
-                CalculationId = result.CalculationId,
-                Price = result.Price.ToDecimalValue()
+                Price = result.ToDecimalValue()
             });
         }
     }

@@ -7,9 +7,6 @@ public class StreamCalculateRequestValidator : AbstractValidator<StreamCalculate
 {
     public StreamCalculateRequestValidator()
     {
-        RuleFor(x => x.UserId)
-            .GreaterThan(0);
-
         RuleFor(x => x.Good)
             .SetValidator(new CalculateRequestGoodPropertiesValidator());
     }
