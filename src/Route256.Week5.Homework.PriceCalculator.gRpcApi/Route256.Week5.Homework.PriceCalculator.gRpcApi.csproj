@@ -7,10 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Protobuf Include="**\*.proto" GrpcServices="Server" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="11.5.2" />
     <PackageReference Include="Google.Protobuf" Version="3.22.3" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.52.0" />
@@ -20,6 +16,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Route256.Week5.Homework.PriceCalculator.Bll\Route256.Week5.Homework.PriceCalculator.Bll.csproj" />
     <ProjectReference Include="..\Route256.Week5.Homework.PriceCalculator.Dal\Route256.Week5.Homework.PriceCalculator.Dal.csproj" />
+    <ProjectReference Include="..\Route256.Week5.Homework.PriceCalculator.ProtoLib\Route256.Week5.Homework.PriceCalculator.ProtoLib.csproj" />
   </ItemGroup>
 
 </Project>
