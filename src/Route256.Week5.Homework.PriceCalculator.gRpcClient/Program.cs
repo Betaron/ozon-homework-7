@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Route256.Week5.Homework.PriceCalculator.gRpcClient.Commands;
-using Route256.Week5.Homework.PriceCalculator.gRpcClient.Protos;
 
 
 var clientOptions = new Action<GrpcClientFactoryOptions>(o =>
@@ -68,7 +67,7 @@ static void PrintHelp()
     var sb = new StringBuilder();
     sb.AppendLine("Available commands:");
     sb.AppendLine("\t- calcuate");
-    sb.AppendLine("\t- stramCalcuate");
+    sb.AppendLine("\t- streamCalcuate");
     sb.AppendLine("\t- clear");
     sb.AppendLine("\t- get");
     sb.AppendLine("\nCtrl + C to exit.");
