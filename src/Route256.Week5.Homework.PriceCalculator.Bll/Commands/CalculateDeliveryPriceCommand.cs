@@ -1,31 +1,49 @@
 using MediatR;
+using Route256.Week5.Homework.PriceCalculator.Bll.Extensions;
 using Route256.Week5.Homework.PriceCalculator.Bll.Models;
 using Route256.Week5.Homework.PriceCalculator.Bll.Services.Interfaces;
 
 namespace Route256.Week5.Homework.PriceCalculator.Bll.Commands;
 
-public record CalculateDeliveryPriceWithoutSavingCommand(GoodModel Good)
-    : IRequest<decimal>;
+public record CalculateDeliveryPriceCommand(
+        long UserId,
+        GoodModel[] Goods)
+    : IRequest<CalculateDeliveryPriceResult>;
 
-public class CalculateDeliveryPriceWithoutSavingCommandHandler
-    : IRequestHandler<CalculateDeliveryPriceWithoutSavingCommand, decimal>
+public class CalculateDeliveryPriceCommandHandler 
+    : IRequestHandler<CalculateDeliveryPriceCommand, CalculateDeliveryPriceResult>
 {
     private readonly ICalculationService _calculationService;
 
-    public CalculateDeliveryPriceWithoutSavingCommandHandler(
+    public CalculateDeliveryPriceCommandHandler(
         ICalculationService calculationService)
     {
         _calculationService = calculationService;
     }
-
-    public Task<decimal> Handle(
-        CalculateDeliveryPriceWithoutSavingCommand request,
+    
+    public async Task<CalculateDeliveryPriceResult> Handle(
+        CalculateDeliveryPriceCommand request, 
         CancellationToken cancellationToken)
     {
-        var volumePrice = _calculationService.CalculatePriceByVolume(new[] { request.Good }, out var _);
-        var weightPrice = _calculationService.CalculatePriceByWeight(new[] { request.Good }, out var _);
+        request.EnsureHasGoods();
+
+        var volumePrice = _calculationService.CalculatePriceByVolume(request.Goods, out var volume);
+        var weightPrice = _calculationService.CalculatePriceByWeight(request.Goods, out var weight);
         var resultPrice = Math.Max(volumePrice, weightPrice);
 
-        return Task.FromResult(resultPrice);
+        var model = new SaveCalculationModel(
+            request.UserId, 
+            volume, 
+            weight,
+            resultPrice, 
+            request.Goods);
+
+        var calculationId = await _calculationService.SaveCalculation(
+            model, 
+            cancellationToken);
+
+        return new CalculateDeliveryPriceResult(
+            calculationId,
+            resultPrice);
     }
 }
